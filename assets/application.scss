@@ -1,0 +1,49 @@
+---
+---
+
+@import 'bootstrap-custom';
+@import 'bootstrap';
+@import 'fonts';
+@import 'palette';
+
+$milliseconds: $rgba-primary-0;
+$minutes: $rgba-secondary-2-0;
+$hours: $rgba-complement-0;
+
+body {
+  background-color: $rgba-secondary-1-0;
+}
+
+#clock {
+  text-align: center;
+}
+
+#milliseconds-arc {
+  fill: $milliseconds;
+  stroke: darken($milliseconds, 30%);
+}
+
+#milliseconds-chaser {
+  fill: lighten($milliseconds, 20%);
+  stroke: darken($milliseconds, 30%);
+}
+
+#minutes-arc {
+  fill: $minutes;
+  stroke: darken($minutes, 30%);
+}
+
+#minutes-chaser {
+  fill: lighten($minutes, 30%);
+  stroke: darken($minutes, 30%);
+}
+
+#hours-arc {
+  fill: $hours;
+  stroke: darken($hours, 30%);
+}
+
+#hours-chaser {
+  fill: lighten($hours, 30%);
+  stroke: darken($hours, 30%);
+}
