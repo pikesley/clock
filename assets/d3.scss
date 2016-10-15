@@ -7,12 +7,16 @@
 @import 'palette';
 
 $milliseconds: $rgba-primary-0;
-$minutes: $rgba-secondary-2-0;
-$hours: $rgba-complement-0;
+$minutes: $rgba-primary-4;
+$hours: $rgba-primary-4;
+
+$darkener: 5%;
+$lightener: 10%;
 
 body {
-  background-color: $rgba-secondary-1-0;
+  background-color: $rgba-primary-1;
   font-family: $font-family-san-serif;
+  color: $rgba-primary-3;
 }
 
 h1, #clock {
@@ -25,30 +29,30 @@ h1 {
 
 #milliseconds-arc {
   fill: $milliseconds;
-  stroke: darken($milliseconds, 30%);
+  stroke: darken($milliseconds, $darkener);
 }
 
 #milliseconds-chaser {
-  fill: lighten($milliseconds, 20%);
-  stroke: darken($milliseconds, 30%);
+  fill: lighten($milliseconds, $lightener);
+  stroke: darken($milliseconds, $darkener);
 }
 
 #minutes-arc {
   fill: $minutes;
-  stroke: darken($minutes, 30%);
+  stroke: darken($minutes, $darkener);
 }
 
 #minutes-chaser {
-  fill: lighten($minutes, 30%);
-  stroke: darken($minutes, 30%);
+  fill: lighten($minutes, $lightener);
+  stroke: darken($minutes, $darkener);
 }
 
 #hours-arc {
   fill: $hours;
-  stroke: darken($hours, 30%);
+  stroke: darken($hours, $darkener);
 }
 
 #hours-chaser {
-  fill: lighten($hours, 30%);
-  stroke: darken($hours, 30%);
+  fill: lighten($hours, $lightener);
+  stroke: darken($hours, $darkener);
 }
