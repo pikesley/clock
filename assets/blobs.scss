@@ -1,0 +1,52 @@
+---
+---
+
+@import 'bootstrap-custom';
+@import 'bootstrap';
+@import 'fonts';
+
+$rgba-primary-0: rgba(255,131,  0,1);	// Main Primary color */
+$rgba-primary-1: rgba(255,179, 99,1);
+$rgba-primary-2: rgba(255,159, 57,1);
+$rgba-primary-3: rgba(197,101,  0,1);
+$rgba-primary-4: rgba(155, 79,  0,1);
+
+$seconds: $rgba-primary-3;
+$minutes: $rgba-primary-0;
+$hours: $rgba-primary-2;
+
+$darkener: 30%;
+$lightener: 10%;
+
+body {
+  background-color: $rgba-primary-1;
+  font-family: $font-family-san-serif;
+  color: $rgba-primary-3;
+}
+
+.outercircle, .markerline {
+  stroke: darken($rgba-primary-1, 10%);
+}
+
+h1, #clock {
+  text-align: center;
+}
+
+h1 {
+  padding-top: 20px;
+}
+
+#seconds-hand {
+  fill: $seconds;
+  stroke: darken($seconds, $darkener);
+}
+
+#minutes-hand {
+  fill: $minutes;
+  stroke: darken($minutes, $darkener);
+}
+
+#hours-hand {
+  fill: $hours;
+  stroke: darken($hours, $darkener);
+}

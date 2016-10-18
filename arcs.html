@@ -1,0 +1,188 @@
+---
+stylesheet: arcs
+---
+
+<div id='clock'></div>
+
+<script>
+// https://www.ericbullington.com/blog/2012/10/27/d3-oclock/
+
+var fields
+
+fields = function() {
+  var currentTime, hour, minute, second
+  currentTime = new Date()
+  second = currentTime.getSeconds()
+  millisecond = currentTime.getMilliseconds() + second * 1000
+  minute = currentTime.getMinutes() + second / 60
+  hour = currentTime.getHours() + minute / 60
+
+  return data = [
+    {
+      'unit': 'milliseconds',
+      'numeric': millisecond
+    },
+  /*  {
+      'unit': 'seconds',
+      'numeric': second
+    },*/
+    {
+      'unit': 'minutes',
+      'numeric': minute
+    },
+    {
+      'unit': 'hours',
+      'numeric': hour
+    }
+  ]
+}
+
+width = 320
+height = width
+sizestep = width / 7
+cornerRadius = width / 40
+margin = width / 40
+handspan = 0.3
+stroke = margin / 32
+
+offSetX = width / 2
+offSetY = height / 2
+pi = Math.PI
+
+scaleMillisecs = d3.scale.linear().domain([0, 59999 + 999999/100000]).range([0, 2 * pi])
+scaleSecs = d3.scale.linear().domain([0, 59 + 999/1000]).range([0, 2 * pi])
+scaleMins = d3.scale.linear().domain([0, 59 + 59/60]).range([0, 2 * pi])
+scaleHours = d3.scale.linear().domain([0, 11 + 59/60]).range([0, 2 * pi])
+
+var vis, clockGroup
+
+vis = d3.select('#clock')
+        .append('svg:svg')
+        .attr('width', width)
+        .attr('height', height)
+
+clockGroup = vis.append('svg:g')
+                .attr('transform', 'translate(' + offSetX + ', ' + offSetY + ')')
+
+var render
+
+render = function(data) {
+  var hourArc, minuteArc, secondArc
+
+  clockGroup.selectAll('.clockhand').remove()
+  clockGroup.selectAll('.handchasers').remove()
+
+  millisecondArc = d3.svg.arc()
+                     .outerRadius(sizestep * 3)
+                     .innerRadius(sizestep * 2 + margin)
+                     .cornerRadius(cornerRadius)
+                     .startAngle(function(d) {
+                       return scaleMillisecs(d.numeric) - handspan
+                     })
+                     .endAngle(function(d) {
+                       return scaleMillisecs(d.numeric) + handspan
+                     })
+
+  millisecondChaser = d3.svg.arc()
+                        .outerRadius(sizestep * 3)
+                        .innerRadius(sizestep * 2 + margin)
+                        .cornerRadius(cornerRadius)
+                        .startAngle(function(d) {
+                          return (pi * 2) + scaleMillisecs(d.numeric) - (handspan + margin / 100)
+                        })
+                        .endAngle(function(d) {
+                          return scaleMillisecs(d.numeric) + (handspan + margin / 100)
+                        })
+
+  minuteArc = d3.svg.arc()
+                .outerRadius(sizestep * 2)
+                .innerRadius(sizestep * 1 + margin)
+                .cornerRadius(cornerRadius / 2)
+                .startAngle(function(d) {
+                  return scaleMins(d.numeric) - handspan
+                })
+                .endAngle(function(d) {
+                  return scaleMins(d.numeric) + handspan
+                })
+
+  minuteChaser = d3.svg.arc()
+                   .outerRadius(sizestep * 2)
+                   .innerRadius(sizestep * 1 + margin)
+                   .cornerRadius(cornerRadius / 2)
+                   .startAngle(function(d) {
+                     return (pi * 2) + scaleMins(d.numeric) - (handspan + margin / 100)
+                   })
+                   .endAngle(function(d) {
+                     return scaleMins(d.numeric) + (handspan + margin / 100)
+                   })
+
+  hourArc = d3.svg.arc()
+              .outerRadius(sizestep * 1)
+              .innerRadius(sizestep * 0 + margin)
+              .cornerRadius(cornerRadius / 3)
+              .startAngle(function(d) {
+                return scaleHours(d.numeric % 12) - handspan
+              })
+              .endAngle(function(d) {
+                return scaleHours(d.numeric % 12) + handspan
+              })
+
+
+  hourChaser = d3.svg.arc()
+                 .outerRadius(sizestep * 1)
+                 .innerRadius(sizestep * 0 + margin)
+                 .cornerRadius(cornerRadius / 3)
+                 .startAngle(function(d) {
+                   return (pi * 2) + scaleHours(d.numeric) - (handspan + margin / 100)
+                 })
+                 .endAngle(function(d) {
+                   return scaleHours(d.numeric) + (handspan + margin / 100)
+                 })
+
+  clockGroup.selectAll('clockhand')
+            .data(data)
+            .enter()
+            .append('svg:path')
+            .attr('d', function(d) {
+              if (d.unit === 'milliseconds') {
+                return millisecondArc(d)
+              } else if (d.unit === 'seconds') {
+                return secondArc(d)
+              } else if (d.unit === 'minutes') {
+                return minuteArc(d)
+              } else if (d.unit === 'hours') {
+                return hourArc(d)
+              }
+            })
+            .attr('class', 'clockhand')
+            .attr('id', function(d) {
+              return d.unit + '-arc'
+            })
+            .attr('stroke-width', stroke)
+
+  clockGroup.selectAll('handchasers')
+            .data(data)
+            .enter()
+            .append('svg:path')
+            .attr('d', function(d) {
+              if (d.unit === 'milliseconds') {
+                return millisecondChaser(d)
+              } else if (d.unit === 'minutes') {
+                return minuteChaser(d)
+              } else if (d.unit === 'hours') {
+                return hourChaser(d)
+              }
+            })
+            .attr('class', 'handchasers')
+            .attr('id', function(d) {
+              return d.unit + '-chaser'
+            })
+            .attr('stroke-width', stroke)
+}
+
+setInterval(function() {
+  var data
+  data = fields()
+  return render(data)
+}, 10)
+</script>

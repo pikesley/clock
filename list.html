@@ -1,0 +1,11 @@
+---
+stylesheet: index
+---
+
+<div class='row'>
+  {% for clock in site.data.clocks %}
+    <div class='col-md-6 embed-responsive embed-responsive-4by3'>
+      <iframe class='embed-responsive-item clockframe' src='/{{ clock }}'></iframe>
+    </div>
+  {% endfor %}
+</div>
