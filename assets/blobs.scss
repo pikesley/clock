@@ -28,12 +28,16 @@ body {
   stroke: darken($rgba-primary-1, 10%);
 }
 
-h1, #clock {
+h1, h2, #clock {
   text-align: center;
 }
 
 h1 {
   padding-top: 20px;
+}
+
+h2 {
+  font-size: 1em;
 }
 
 #seconds-hand {
