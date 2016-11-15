@@ -28,8 +28,9 @@ body {
   stroke: darken($rgba-primary-1, 10%);
 }
 
-h1, h2, #clock {
+h1, h2, h3, #clock {
   text-align: center;
+  word-spacing: 1em;
 }
 
 h1 {
@@ -37,7 +38,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1em;
+  font-size: 1.2em;
 }
 
 #seconds-hand {
@@ -53,4 +54,17 @@ h2 {
 #hours-hand {
   fill: $hours;
   stroke: darken($hours, $darkener);
+}
+
+h2, #footer {
+  a {
+    text-decoration: none;
+  }
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
 }
